@@ -1,6 +1,6 @@
 # 0x00. Python - Hello, World
 
-###About the Directory
+### About the Directory
 
 An introductory python familiarization project on
 
