@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 def safe_print_list(my_list=[], x=0):
-    try:
-        outcome = a / b
-    except ZeroDivisionError:
-        outcome = None
-    finally:
-        print("Inside outcome: {}".format(outcome))
-    return (outcome)
+    result = 0
+    for i in range(x):
+        try:
+            print(my_list[i], end="")
+            result += 1
+        except IndexError:
+            break
+    print()
+    return result
