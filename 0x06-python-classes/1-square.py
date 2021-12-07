@@ -2,8 +2,4 @@
 
 class Square:
     def __init__(self, size):
-        self.size = size
-
-
-obj = Square()
-print(obj)
+        self.__size = size
