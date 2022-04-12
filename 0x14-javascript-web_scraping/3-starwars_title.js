@@ -1,24 +1,20 @@
 #!/usr/bin/node
+/*  script that prints the title of a Star Wars movie where the episode number
+matches a given integer.
+The first argument is the movie ID
+You must use the Star wars API with the endpoint
+https://swapi-api.hbtn.io/api/films/:id
+You must use the module request */
 
-const request = require('request');
-const url = process.argv[2];
-
-request(url, function (err, response, body) {
-  if (err) {
-    console.log(err);
-  } else if (response.statusCode === 200) {
-    const films = JSON.parse(body).results;
-    let count = 0;
-    for (const filmIndex in films) {
-      const filmChars = films[filmIndex].characters;
-      for (const charIndex in filmChars) {
-        if (filmChars[charIndex].includes('18')) {
-          count++;
-        }
-      }
-    }
-    console.log(count);
+const arg = process.argv;
+const movieId = arg[2];
+const requestURL = 'https://swapi-api.hbtn.io/api/films/' + movieId;
+const req = require('request');
+req(requestURL, function (error, response, body) {
+  if (error) {
+    console.log(error);
   } else {
-    console.log('An error occured. Status code: ' + response.statusCode);
+    console.log(JSON.parse(body).title);
   }
 });
+© 2022 GitHub, Inc.
