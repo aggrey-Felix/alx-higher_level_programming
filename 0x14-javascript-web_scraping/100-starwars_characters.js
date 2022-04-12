@@ -1,27 +1,32 @@
 #!/usr/bin/node
+const argv = process.argv;
+const urlFilm = 'https://swapi-api.hbtn.io/api/films/';
+const urlMovie = `${urlFilm}${argv[2]}/`;
+
 const request = require('request');
-const film = process.argv[2];
-let url = 'http://swapi.co/api/people/';
-function filmcharacters (film, url) {
-  request(url, function (err, response, body) {
-    if (err) {
-      console.log(err);
-    } else if (response.statusCode === 200) {
-      let jsonobj = JSON.parse(body);
-      let people = jsonobj.results;
-      for (let i in people) {
-        for (let j in people[i].films) {
-          if (people[i].films[j].includes(film)) {
-            console.log(people[i].name);
+
+request(urlMovie, function (error, response, body) {
+  if (error) {
+    console.error('error:', error);
+  } else {
+    try {
+      const rbody = JSON.parse(body);
+      for (const i of rbody.characters) {
+        request(i, function (errorc, responsec, bodyc) {
+          if (error) {
+            console.error('error:', errorc);
+          } else {
+            try {
+              const cbody = JSON.parse(bodyc);
+              console.log(cbody.name);
+            } catch (error) {
+              console.error('error:', error);
+            }
           }
-        }
+        });
       }
-      if (jsonobj.next !== null) {
-        filmcharacters(film, jsonobj.next);
-      }
-    } else {
-      console.log('An error occured. Status code: ' + response.statusCode);
+    } catch (err) {
+      console.error('error:', err);
     }
-  });
-}
-filmcharacters(film, url);
+  }
+});
